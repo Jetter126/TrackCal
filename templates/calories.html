@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    Calorie Tracker
+{% endblock %}
+
+{% block body %}
+    <!-- Guide to tracking calories -->
+    <h1 class="display-6 d-flex justify-content-center">How to Track Your Calories:</h1>
+    <p class="mt-5 col-md-12" style="font-size: 20px;">
+        1. Go to <a href="https://www.myfitnesspal.com/" style="text-decoration: none; color: #198754;">MyFitnessPal</a> and find how many calories the food you've eaten contains
+        <br><br>
+        2. Select the date you ate the food
+        <br><br>
+        3. Add the correct number of calories below
+        <br><br>
+        That's it! Do this for every meal you eat and you'll be able to track your daily calorie intake, all in one place.
+    </p>
+
+    <!-- Set calorie goal -->
+    <h1 class="display-6 d-flex justify-content-center mt-4 col-md-12">Set Your Calorie Goal</h1>
+    <p class="mt-4 col-md-12 justify-content-center" style="font-size: 20px; margin: auto;">If you haven't set your calorie goal, or if you want to change it, set it below:</p>
+    <form action="/calories" method="post" class="w-25" style="margin: auto;">
+        <div class="form-group mt-4 col-md-12">
+            <input autocomplete="off" autofocus class="form-control" name="bmr" placeholder="Basal Metabolic Rate (BMR)" type="text">
+        </div>
+        <div class="form-check mt-2 col-md-12 justify-content-center">
+            <label style="font-size: 12px;">&nbsp;&nbsp;&nbsp;</label>
+            <input type="radio" class="btn-check btn-success form-check-input" name="goal" id="lose" value="lose" autocomplete="off">
+            <label class="btn btn-outline-success" for="lose">Lose Weight</label>
+            <input type="radio" class="form-check-input btn-check btn-success" name="goal" id="gain" value="gain" autocomplete="off">
+            <label class="btn btn-outline-success" for="gain">Gain Weight</label>
+        </div>
+        <p class="mt-2 col-md-12" style="font-size: 18px; text-align: center;">Goal (kilograms per week):</p>
+        <div class="btn-group justify-content-center col-md-12" style="top: -7px"> 
+            <select class="form-select" id="amount" name="amount">
+                <option value=0.25>0.25</option>
+                <option value=0.5>0.5</option>
+                <option value=0.75>0.75</option>
+                <option value=1>1</option>
+            </select>
+        </div>
+        <button class="btn btn-success col-md-12" type="submit" name="find" value="find">Find</button>
+    </form>
+
+    <!-- Display calorie goal -->
+    {% if goal != 0 %}
+    <h1 class="display-6 d-flex justify-content-center mt-4 col-md-12" style="font-size: 28px;" id="bmr">{{ goal }} calories per day</h1>
+    {% endif %}
+
+    <!-- Display errors -->
+    {% if error != 0 and case == 1 %}
+        <div class="mx-auto alert alert-danger mt-4 col-md-12 w-50 d-flex justify-content-center" role="alert" style>
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <!-- Track calories -->
+    <h1 class="display-6 d-flex mt-4 col-md-12 justify-content-center">Track Calories</h1>
+    <form action="/calories" method="post" class="w-50" style="margin: auto;">
+        <h1 class="display-6 mt-4 col-md-12" style="font-size: 18px;">Date</h1>
+        <div class="mt-2 col-md-12 row">
+            <div class="col">
+                <input autocomplete="off" autofocus class="form-control" name="date" placeholder="Day" value="{{ date.day }}" type="text">
+            </div>
+            <div class="col">
+                <input autocomplete="off" class="form-control" name="month" placeholder="Month" value="{{ date.month }}" type="text">
+            </div>
+            <div class="col">
+                <input autocomplete="off" class="form-control" name="year" placeholder="Year" value="{{ date.year }}" type="text">
+            </div>
+        </div>
+        <h1 class="display-6 mt-4 col-md-12" style="font-size: 18px;">Calories</h1>
+        <div class="mt-2 col-md-12 row">
+            <div class="col">
+                <input autocomplete="off" class="form-control" name="calories" placeholder="Calories" type="text">
+            </div>
+            <div class="col">
+                <button class="btn btn-success" type="submit" name="add" value="add">Add</button>
+                <button class="btn btn-success" type="submit" name="remove" value="remove">Remove</button>
+                <button class="btn btn-success" type="submit" name="view" value="view">View Intake</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Display tracked calories -->
+    {% if progress != -1 %}
+        <div class="progress w-50 mt-4 col-md-12" style="height: 20px; margin: auto;">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="w-50 mt-2 col-md-12" style="margin: auto; text-align: right;">
+            <h1 class="display-6 mt-2 col-md-12 ms-auto" style="font-size: 18px;">{{ cal_done }}/{{ goal }}</h1>
+        </div>
+    {% endif %}
+
+    <!-- Display errors -->
+    {% if error != 0 and case == 2 %}
+        <div class="mx-auto alert alert-danger mt-4 col-md-12 w-50 d-flex justify-content-center" role="alert" style>
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <br>
+    <br>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    BMR Calculator
+{% endblock %}
+
+{% block body %}
+    <!-- Heading and description -->
+    <h1 class="display-6 d-flex justify-content-center">Basal Metabolic Rate Calculator</h1>
+    <div class="mt-5 col-md-12" style="font-size: 20px;">
+        <p>Your basal metabolic rate (BMR) is the amount of energy that your body expends at rest. In other words, it is the number of calories your body burns just by carrying out its vital functions, like breathing and keeping you warm.</p>
+        <br>
+        <p>Use this calculator to find out your basal metabolic rate!</p>
+    </div>
+
+    <!-- Calculator form -->
+    <form action="/bmrcalculator" method="post" class="w-25" style="margin: auto;">
+        <div class="form-group mt-4 col-md-12">
+            <input autocomplete="off" autofocus class="form-control" name="age" placeholder="Age (15-80)" type="text">
+        </div>
+        <div class="form-group mt-2 col-md-12">
+            <input autocomplete="off" class="form-control" name="height" placeholder="Height (in cm)" type="text">
+        </div>
+        <div class="form-group mt-2 col-md-12">
+            <input autocomplete="off" class="form-control" name="weight" placeholder="Weight (in kg)" type="text">
+        </div>
+        <div class="form-check mt-2 col-md-12 justify-content-center">
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input type="radio" class="btn-check btn-success form-check-input" name="gender" id="male" value="male" autocomplete="off">
+            <label class="btn btn-outline-success" for="male">Male</label>
+            <input type="radio" class="form-check-input btn-check btn-success" name="gender" id="female" value="female" autocomplete="off">
+            <label class="btn btn-outline-success" for="female">Female</label>
+        </div>
+        <button class="btn btn-success mt-2 col-md-12" type="submit" id="calculate">Calculate</button>
+    </form>
+
+    <!-- Display BMR after calculation -->
+    {% if bmr != 0 %}
+        <h1 class="display-6 d-flex justify-content-center mt-4 col-md-12" style="font-size: 28px;" id="bmr">{{ bmr }} calories per day</h1>
+        <br>
+        <br>
+    {% endif %}
+
+    <!-- Display errors -->
+    {% if error != 0 %}
+        <div class="mx-auto alert alert-danger mt-4 col-md-12 w-50 d-flex justify-content-center" role="alert" style>
+            {{ error }}
+        </div>
+        <br>
+        <br>
+    {% endif %}
+
+{% endblock %}

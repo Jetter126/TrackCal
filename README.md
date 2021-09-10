@@ -63,3 +63,7 @@ A red alert is displayed if there are any errors.
 #### information.html
 
 information.html is a static page that displays information about the science behind calories, weight loss and weight gain.
+
+#### donate.html
+
+donate.html allows the user to donate through a PayPal link.
